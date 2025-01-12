@@ -1,10 +1,13 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
     static int rounds = Dice.drawableCards;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -40,22 +43,18 @@ public class Main {
 
         */
 
-        /*
-        System.out.printf("\n\nYou have %d cards left.", Dice.drawableCards);
-            Dice.generateCards();
-            Dice.rollDice();
-            currentRound++;
-            Dice.generatedCards.clear();
-            Dice.rolledDices.clear();
-         */
+        Clown.startDialog("Hello!"); //testing dialog - [works], adjust sound
 
-        //Clown.startDialog("Hello!"); //testing dialog - [works], adjust sound
-
-        //currently working on the round system
         int currentRound = 1;
         boolean rolledBigDiceThisRound = false;
-        
+
+        Clown.loopSound("src/Audio/scar-ambience.wav");
+        //Clown.randomlyPlaySound("src/Audio/doors-lights-flicker.wav", 5000, 15000);
+
         while (Dice.drawableCards > 0) {
+
+            //randomly play lights flicker sound
+            //Clown.randomlyPlaySound("src/Audio/doors-lights-flicker.wav", 5000, 15000);
 
             //checks if the game should be ended currentRound > rounds
             if (currentRound > rounds) {
@@ -112,6 +111,9 @@ public class Main {
                 }
             }
 
+            //resets the ArrayLists so no bugs there can occur
+            Dice.generatedCards.clear();
+            Dice.rolledDices.clear();
 
         }
 
@@ -121,14 +123,3 @@ public class Main {
     }
 
 }
-
-/*
-
-problem with the program:
-
-Your cards are the following: [5, 1, 5]
-You rolled: [5, 4, 6]
-You have 2 points.
-in this example, it counts the 5 twice
-
- */
