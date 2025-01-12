@@ -33,19 +33,44 @@ public class Dice {
 
     public static void rollBigDice() {
         //-roll big dice to randomly get: -1 point, -1 card, nothing, +1 card, +1 point
-        int roll = random.nextInt(0, 5) + 1;
-        switch (roll) {
-            case 1 -> points--;
-            case 2 -> drawableCards--;
-            case 3 -> System.out.println("nothing happens");
-            case 4 -> drawableCards++;
-            case 5 -> points++;
+
+        System.out.println("Are you sure that you wanna roll this dice?");
+
+        String userInput = scanner.nextLine();
+
+        if (userInput.equalsIgnoreCase("yes")) {
+            int roll = random.nextInt(0, 5) + 1;
+            switch (roll) {
+                case 1 -> {
+                    points--;
+                    System.out.println("You loose one point!");
+                    System.out.printf("You now have %d points.", points);
+                }
+                case 2 -> {
+                    drawableCards--;
+                    System.out.println("You loose one drawable card!");
+                    System.out.printf("You now have %d drawable cards.", drawableCards);
+                }
+                case 3 -> System.out.println("nothing happens");
+                case 4 -> {
+                    drawableCards++;
+                    System.out.println("You gain one drawable card!");
+                    System.out.printf("You now have %d drawable cards.", drawableCards);
+                }
+                case 5 -> {
+                    points++;
+                    System.out.println("You gain one point card!");
+                    System.out.printf("You now have %d points.", points);
+                }
+            }
+        } else {
+            System.out.println("This dice wasn't rolled");
         }
 
     }
 
     //rolls the dice 😆
-    public static void rollDice() {
+    public static void rollDices() {
         for (int i = 0; i < 3; i++) {
             int dice = random.nextInt(0, 6) + 1;
             rolledDices.add(dice);
@@ -93,7 +118,7 @@ public class Dice {
         } else if (points == 1) {
             System.out.println("You have 1 point");
         } else if (points > 1) {
-            System.out.printf("\nYou have %d points.", points);
+            System.out.printf("\n\nYou have %d points.", points);
         }
     }
 
