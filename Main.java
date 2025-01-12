@@ -1,6 +1,12 @@
+import java.util.Scanner;
+
 public class Main {
 
+    static int rounds = Dice.drawableCards;
+
     public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
 
         /*
 
@@ -18,6 +24,8 @@ public class Main {
         rerolls: 3 - [completed]
         -one gets added each proceeding round
 
+
+
         Clown
         -killsUser action
         -Sound System
@@ -32,17 +40,84 @@ public class Main {
 
         */
 
-        //currently working on the round system
-        int currentRound = 1;
-        while (Dice.drawableCards > 0) {
-            System.out.println("\nYou are on Round " + currentRound);
+        /*
+        System.out.printf("\n\nYou have %d cards left.", Dice.drawableCards);
             Dice.generateCards();
             Dice.rollDice();
             currentRound++;
             Dice.generatedCards.clear();
             Dice.rolledDices.clear();
+         */
+
+        //Clown.startDialog("Hello!"); //testing dialog - [works], adjust sound
+
+        //currently working on the round system
+        int currentRound = 1;
+        boolean rolledBigDiceThisRound = false;
+        
+        while (Dice.drawableCards > 0) {
+
+            //checks if the game should be ended currentRound > rounds
+            if (currentRound > rounds) {
+                if (Dice.points == 10) {
+                    System.out.println("You won the game!");
+                    System.exit(0);
+                } else {
+                    System.out.println("You lost my friend...");
+                    Clown.killUser();
+                    System.exit(0);
+                }
+            }
+
+            //menu board
+            System.out.println("\nYou are on round " + currentRound);
+            System.out.println("+----------------------------------------+");
+            System.out.println("|            Select an Option            |");
+            System.out.println("+----------------------------------------+");
+            System.out.println("|  1. Roll the big dice                  |");
+            System.out.println("|  2. Draw cards                         |");
+            System.out.println("|  3. Exit game                          |");
+            System.out.println("+----------------------------------------+");
+
+            int userInput = scanner.nextInt();
+            scanner.nextLine();
+
+            //
+            if (rolledBigDiceThisRound) {
+                switch (userInput) {
+                    case 1 -> {
+                        System.out.println("You aren't able to roll this dice this game anymore!");
+                    }
+                    case 2 -> {
+                        Dice.generateCards();
+                        Dice.rollDices();
+                        currentRound++;
+                    }
+                    case 3 -> System.exit(0);
+                    default -> System.out.println("Please enter a valid number!");
+                }
+            } else {
+                switch (userInput) {
+                    case 1 -> {
+                        Dice.rollBigDice();
+                        rolledBigDiceThisRound = true;
+                    }
+                    case 2 -> {
+                        Dice.generateCards();
+                        Dice.rollDices();
+                        currentRound++;
+                    }
+                    case 3 -> System.exit(0);
+                    default -> System.out.println("Please enter a valid number!");
+                }
+            }
+
+
         }
 
+        //here is the end of while loop
+        scanner.close();
+        System.exit(0);
     }
 
 }
@@ -54,5 +129,6 @@ problem with the program:
 Your cards are the following: [5, 1, 5]
 You rolled: [5, 4, 6]
 You have 2 points.
+in this example, it counts the 5 twice
 
  */
