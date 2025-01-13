@@ -1,13 +1,10 @@
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
     static int rounds = Dice.drawableCards;
 
-    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -34,22 +31,28 @@ public class Main {
         -Sound System
         --make the clown speak (for loop with dialog)
 
-        Round System
-        -3 to 5 rounds
-
         Money System
         -decided to not use a money system since we aren't buying anything with the money,
         so the money would have no use besides display
 
         */
 
-        Clown.startDialog("Hello!"); //testing dialog - [works], adjust sound
-
         int currentRound = 1;
         boolean rolledBigDiceThisRound = false;
 
         Clown.loopSound("src/Audio/scar-ambience.wav");
-        //Clown.randomlyPlaySound("src/Audio/doors-lights-flicker.wav", 5000, 15000);
+        Clown.randomlyPlaySound("src/Audio/doors-lights-flicker.wav", 5000, 15000);
+        
+        Clown.startDialog("Let’s play a game."); //testing dialog - [works], adjust sound
+        Clown.startDialog("Take a card and then roll all 3 dice.");
+        Clown.startDialog("For each hit you get a point.");
+        Clown.startDialog("We will play, until you don’t have any cards left.");
+        Clown.startDialog("Reach at least 10 points to see your family again.");
+        Clown.startDialog("You can also roll the big die to get an extra card.");
+        Clown.startDialog("But beware, you only have a 40 percent chance of hitting.");
+        Clown.startDialog("You will start with 9 cards, 0 points and 3 rerolls.");
+        Clown.startDialog("Good luck.");
+         
 
         while (Dice.drawableCards > 0) {
 
@@ -121,5 +124,7 @@ public class Main {
         scanner.close();
         System.exit(0);
     }
+
+}
 
 }
