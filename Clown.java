@@ -24,10 +24,12 @@ public class Clown {
                 throw new RuntimeException(e);
             }
 
-            if (i == text.length()) {
-                break;
-            }
-
+        }
+        System.out.println();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println("Error :3");
         }
 
     }
@@ -67,20 +69,25 @@ public class Clown {
         }
     }
 
-    //I asked on stack overflow how I could fix the issue with the sound being played randomly, but the code isn't progressing
-    //Let's see what will happen or if somebody answers
-    public static void randomlyPlaySound(String soundPath, int milliOne, int milliTwo){
-        Random random = new Random();
+    public static void randomlyPlaySound(String soundPath, int milliOne, int milliTwo) {
+        // Create a new thread for the sound-playing logic
+        Thread soundThread = new Thread(() -> {
+            Random random = new Random();
+            while (true) {
+                try {
+                    int randomMilliseconds = random.nextInt(milliOne, milliTwo) + 1;
+                    Thread.sleep(randomMilliseconds);
 
-        try {
-            int randomMilliseconds = random.nextInt(milliOne, milliTwo) + 1;
-            Thread.sleep(randomMilliseconds);
-            playSound(soundPath);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+                    // Call your playSound method
+                    playSound(soundPath);
+                } catch (Exception e) {
+                    System.out.println("Error in sound thread: " + e.getMessage());
+                }
+            }
+        });
 
-
+        soundThread.setDaemon(true); // Make the thread a daemon so it doesn't block JVM shutdown
+        soundThread.start(); // Start the thread
     }
 
 }
