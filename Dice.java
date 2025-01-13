@@ -102,16 +102,17 @@ public class Dice {
 
     //checks if the rolled dices are equal to the cards also gives the points
     public static void checkCards() {
-        for (int card : generatedCards) {
-            rolledDices.contains(card);
 
-            boolean containsNumber = rolledDices.contains(card);
+        for (int i = 0; i < rolledDices.size(); i++) {
+            boolean containsNumber = rolledDices.get(i).equals(generatedCards.get(i));
+
             //System.out.println(containsNumber); //prints if the card that is loop a card from the generated cards
 
             if (containsNumber == true) {
                 points++;
             }
         }
+
         //just a grammar readjustment of saying your points
         if (points == 0) {
             System.out.println("You have 0 points");
